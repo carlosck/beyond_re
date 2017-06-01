@@ -28,7 +28,7 @@ namespace UnityStandardAssets._2D
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
-            m_Anim = GetComponent<Animator>();
+            m_Anim = transform.Find("sprites").GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
@@ -49,6 +49,7 @@ namespace UnityStandardAssets._2D
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+            Debug.Log(m_Rigidbody2D.velocity.y);
         }
 
 
