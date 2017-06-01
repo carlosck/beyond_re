@@ -6,8 +6,8 @@ public class PlayerHealth : MonoBehaviour
 {
 	public int startingHealth = 100;
 	public int currentHealth;
-	public Slider healthSlider;
-	public Text HealthTextPercent;
+	//public Slider healthSlider;
+	//public Text HealthTextPercent;
 	public int defense = 0;
 	//public GameObject fadeObj ;
 	//public UIActions ui;
@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour
 	GameObject player;
 	Transform player_transform;
 	//CharacterMotor characterMotor;
-	SpriteRenderer renderer;
+	//SpriteRenderer renderer;
 
 
 	void Awake()
@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag("Player");
 		player_transform= player.GetComponent<Transform>();
 		//characterMotor = player.GetComponent<CharacterMotor>();
-		renderer = transform.Find("animations").GetComponent <SpriteRenderer>();
+		//renderer = transform.Find("animations").GetComponent <SpriteRenderer>();
 		//childObject.transform.parent.gameObject	
 	}
 
@@ -52,19 +52,19 @@ public class PlayerHealth : MonoBehaviour
 			currentHealth -= total_damage;
 		}
 				
-		ShowDamage(total_damage);	
+		//ShowDamage(total_damage);	
 		
 		if(currentHealth>0)
 		{
 			
 			
-			updateHealthBar();
-			StartCoroutine(showRed());
+			// updateHealthBar();
+			// StartCoroutine(showRed());
 		}
 		else
 		{
-			HealthTextPercent.text = "0";
-			healthSlider.value = 0;
+			// HealthTextPercent.text = "0";
+			// healthSlider.value = 0;
 			if(currentHealth <= 0 && !isDead)
 			{
 				Die();
@@ -84,7 +84,7 @@ public class PlayerHealth : MonoBehaviour
 	
 	void ShowDamage(int amount)
 	{
-		var pos= (Vector3) player.GetComponent<Transform>().position;
+		//var pos= (Vector3) player.GetComponent<Transform>().position;
 		
 		
 		//var show_dmg = (Transform) Instantiate(show_damage, pos, Quaternion.identity);
@@ -94,21 +94,21 @@ public class PlayerHealth : MonoBehaviour
 		//Destroy(show_dmg.gameObject,1.1f);
 
 	}
-	IEnumerator showRed()
-	{		
-		renderer.color = new Color(1f, 0f, 0f, 1f);
-		yield return new WaitForSeconds(0.5f);
-		renderer.color = new Color(1f, 1f, 1f, 1f);		
-    }
+	// IEnumerator showRed()
+	// {		
+	// 	renderer.color = new Color(1f, 0f, 0f, 1f);
+	// 	yield return new WaitForSeconds(0.5f);
+	// 	renderer.color = new Color(1f, 1f, 1f, 1f);		
+ //    }
     public void restart()
     {
     	currentHealth = startingHealth;
     	isDead = false;
-    	updateHealthBar();
+    	//updateHealthBar();
     	//characterMotor.Revive();
     }
-    public void updateHealthBar(){
-    	HealthTextPercent.text = currentHealth.ToString() ;
-    	healthSlider.value = currentHealth;
-    }
+    // public void updateHealthBar(){
+    // 	HealthTextPercent.text = currentHealth.ToString() ;
+    // 	healthSlider.value = currentHealth;
+    // }
 }

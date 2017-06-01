@@ -16,10 +16,10 @@ public class enemyAttack : MonoBehaviour {
 	
 	void Awake () {		
 		player = GameObject.FindGameObjectWithTag("Player");
-		playerHealth = player.GetComponent<PlayerHealth>();
+		//playerHealth = player.GetComponent<PlayerHealth>();
 		//anim = GetComponent<Animator>();
-		anim = transform.Find("animContainer/animations").GetComponent <Animator>();
-		health = GetComponent <HealthSystem>();
+		//anim = transform.Find("animContainer/animations").GetComponent <Animator>();
+		//health = GetComponent <HealthSystem>();
 	}
 	
 	void OnTriggerEnter(Collider other)

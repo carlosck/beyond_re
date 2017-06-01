@@ -20,6 +20,9 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
+        public GameObject bulletPrefab;
+        public Transform shootOrigin;
+
         private void Awake()
         {
             // Setting up references.
@@ -101,6 +104,8 @@ namespace UnityStandardAssets._2D
             if(shoot){
                
                m_Anim.SetBool("Shoot", shoot);
+
+
             }
             if(!shoot && m_Anim.GetBool("Shoot"))
            {
@@ -122,6 +127,26 @@ namespace UnityStandardAssets._2D
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+        }
+
+        public void ShootBullet()
+        {
+            GameObject Clone;
+            //Clone = (Instantiate(bulletPrefab, transform.position,transform.rotation)) as GameObject;
+            Clone = (Instantiate(bulletPrefab, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,0))));
+            if(m_FacingRight)
+            {
+                Vector2 thrust = new Vector2(100, 0);
+                Clone.GetComponent<Rigidbody2D>().AddForce(thrust * 10);
+            }
+            else
+            {
+                //Clone = (Instantiate(bulletPrefab, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,180f))));
+                Vector2 thrust = new Vector2(-100, 0);
+                Clone.GetComponent<Rigidbody2D>().AddForce(thrust * 10);
+            }
+            
+            
         }
     }
 }

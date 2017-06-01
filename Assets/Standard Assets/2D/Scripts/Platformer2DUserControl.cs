@@ -10,7 +10,9 @@ namespace UnityStandardAssets._2D
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
         private bool m_Shoot;
-
+        
+        public float fireRate = 0.5f;
+        float nextFire = 0;
 
         private void Awake()
         {
@@ -25,10 +27,12 @@ namespace UnityStandardAssets._2D
                 // Read the jump input in Update so button presses aren't missed.
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
-            if (!m_Shoot)
+            if (CrossPlatformInputManager.GetButtonDown("Fire1"))
             {
                 // Read the jump input in Update so button presses aren't missed.
-                m_Shoot = CrossPlatformInputManager.GetButtonDown("Fire1");
+                
+                shoot();
+                
             }
         }
 
@@ -42,6 +46,14 @@ namespace UnityStandardAssets._2D
             m_Character.Move(h, crouch, m_Jump,m_Shoot);
             m_Jump = false;
             m_Shoot = false;
+        }
+        void shoot()
+        {
+            if(Time.time>nextFire){
+                nextFire= Time.time+fireRate;
+                m_Shoot = true;
+                m_Character.ShootBullet();
+            }
         }
     }
 }

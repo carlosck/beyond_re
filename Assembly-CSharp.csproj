@@ -52,6 +52,8 @@
      <Compile Include="Assets\enemies\scripts\enemyAttack.cs" />
      <Compile Include="Assets\enemies\scripts\enemyHealth.cs" />
      <Compile Include="Assets\hero\scripts\PlayerHealth.cs" />
+     <Compile Include="Assets\hero\scripts\utils\DestroyMe.cs" />
+     <Compile Include="Assets\hero\scripts\utils\ProjectileController.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

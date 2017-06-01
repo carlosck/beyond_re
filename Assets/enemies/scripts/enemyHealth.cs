@@ -16,7 +16,7 @@ public class EnemyHealth : MonoBehaviour {
 	public Transform show_damage;
 	GameObject damage_enemy;
 	//QuestContainer quest_container;
-	Transform enemy_transform;
+	//Transform enemy_transform;
 	// Use this for initialization
 	void Start () {
 	
@@ -28,14 +28,14 @@ public class EnemyHealth : MonoBehaviour {
 	}
 	void Awake()
 	{
-		anim = transform.Find("animContainer/animations").GetComponent <Animator>();		
-		anim.speed= Random.Range(0.8f,1.2f);
-		healthSlider = transform.Find("Canvas/HealtSlider").GetComponent <Slider>();
-		healthSlider.maxValue = startingHealth;
+		// anim = 	GetComponent <Animator>();		
+		// anim.speed= Random.Range(0.8f,1.2f);
+		// healthSlider = transform.Find("Canvas/HealtSlider").GetComponent <Slider>();
+		// healthSlider.maxValue = startingHealth;
 		currentHealth = startingHealth;	
-		HealthTextPercent.text = currentHealth.ToString() ;
-		damage_enemy = (GameObject)Resources.Load ("prefabs/damage_enemy", typeof(GameObject));
-		enemy_transform= GetComponent<Transform>();	
+		// HealthTextPercent.text = currentHealth.ToString() ;
+		// //damage_enemy = (GameObject)Resources.Load ("prefabs/damage_enemy", typeof(GameObject));
+		// enemy_transform= GetComponent<Transform>();	
 	}
 	
 
@@ -53,18 +53,18 @@ public class EnemyHealth : MonoBehaviour {
 			currentHealth -= total_damage;
 		}
 				
-		ShowDamage(total_damage);	
+		//ShowDamage(total_damage);	
 		
 		if(currentHealth>0)
 		{
 			
-			HealthTextPercent.text = currentHealth.ToString() ;
-			healthSlider.value = currentHealth;
+			//HealthTextPercent.text = currentHealth.ToString() ;
+			//healthSlider.value = currentHealth;
 		}
 		else
 		{
-			HealthTextPercent.text = "0";
-			healthSlider.value = 0;
+			// HealthTextPercent.text = "0";
+			// healthSlider.value = 0;
 			if(currentHealth <= 0 && !isDead)
 			{
 				Death();
@@ -84,13 +84,13 @@ public class EnemyHealth : MonoBehaviour {
 
 	void ShowDamage(int amount)
 	{
-		var pos= enemy_transform.position;		
+		//var pos= enemy_transform.position;		
 
-		var show_dmg = (GameObject) Instantiate(damage_enemy, pos, Quaternion.identity);
+		//var show_dmg = (GameObject) Instantiate(damage_enemy, pos, Quaternion.identity);
 		//var show_dmg = (Transform) Instantiate(show_damage, pos, Quaternion.identity);
 		
 		//Text dmg_txt = (Text) show_dmg.transform.Find("GameObject/Canvas/Text").GetComponent <Text>();
 		//dmg_txt.text= amount+" "; 
-		Destroy(show_dmg.gameObject,1.1f);
+		//Destroy(show_dmg.gameObject,1.1f);
 	}
 }
