@@ -27,13 +27,7 @@ namespace UnityStandardAssets._2D
                 // Read the jump input in Update so button presses aren't missed.
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
-            if (CrossPlatformInputManager.GetButtonDown("Fire1"))
-            {
-                // Read the jump input in Update so button presses aren't missed.
-                
-                shoot();
-                
-            }
+            
         }
 
 
@@ -43,6 +37,16 @@ namespace UnityStandardAssets._2D
             bool crouch = Input.GetKey(KeyCode.DownArrow);
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             // Pass all parameters to the character control script.
+            if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+            {
+                // Read the jump input in Update so button presses aren't missed.
+                //shoot();
+                if(Time.time>nextFire){
+                    nextFire= Time.time+fireRate;
+                    m_Shoot = true;
+                    //m_Character.ShootBullet();
+                }
+            }
             m_Character.Move(h, crouch, m_Jump,m_Shoot);
             m_Jump = false;
             m_Shoot = false;

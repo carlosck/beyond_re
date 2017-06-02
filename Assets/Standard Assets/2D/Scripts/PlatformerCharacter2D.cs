@@ -22,6 +22,7 @@ namespace UnityStandardAssets._2D
 
         public GameObject bulletPrefab;
         public Transform shootOrigin;
+        public float rocketSpeed;
 
         private void Awake()
         {
@@ -49,7 +50,7 @@ namespace UnityStandardAssets._2D
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-            Debug.Log(m_Rigidbody2D.velocity.y);
+            
         }
 
 
@@ -102,11 +103,9 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
             
-            if(shoot){
-               
-               m_Anim.SetBool("Shoot", shoot);
-
-
+            if(shoot)
+            {
+                ShootBullet();
             }
             if(!shoot && m_Anim.GetBool("Shoot"))
            {
@@ -134,18 +133,18 @@ namespace UnityStandardAssets._2D
         {
             GameObject Clone;
             //Clone = (Instantiate(bulletPrefab, transform.position,transform.rotation)) as GameObject;
+            m_Anim.SetBool("Shoot", true);
             Clone = (Instantiate(bulletPrefab, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,0))));
+            Vector2 thrust;
             if(m_FacingRight)
             {
-                Vector2 thrust = new Vector2(100, 0);
-                Clone.GetComponent<Rigidbody2D>().AddForce(thrust * 10);
+                thrust = new Vector2(rocketSpeed, 0);
             }
             else
-            {
-                //Clone = (Instantiate(bulletPrefab, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,180f))));
-                Vector2 thrust = new Vector2(-100, 0);
-                Clone.GetComponent<Rigidbody2D>().AddForce(thrust * 10);
+            {                
+                thrust = new Vector2(-rocketSpeed, 0);                
             }
+            Clone.GetComponent<Rigidbody2D>().AddForce(thrust * 10);
             
             
         }

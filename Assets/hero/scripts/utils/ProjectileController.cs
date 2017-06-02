@@ -10,7 +10,7 @@ public class ProjectileController : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		rb= GetComponent<Rigidbody2D>();
-		rb.AddForce(new Vector2(1,0)*rocketSpeed,ForceMode2D.Impulse);
+		//rb.AddForce(new Vector2(1,0)*rocketSpeed,ForceMode2D.Impulse);
 	}
 	
 	// Update is called once per frame
