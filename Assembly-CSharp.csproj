@@ -46,11 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\enemies\scripts\HealthSystem.cs" />
      <Compile Include="Assets\enemies\scripts\behavior.cs" />
      <Compile Include="Assets\enemies\scripts\defendTerritory.cs" />
      <Compile Include="Assets\enemies\scripts\enemyAttack.cs" />
      <Compile Include="Assets\enemies\scripts\enemyHealth.cs" />
+     <Compile Include="Assets\enemies\scripts\enemyWalk.cs" />
      <Compile Include="Assets\hero\scripts\PlayerHealth.cs" />
      <Compile Include="Assets\hero\scripts\utils\DestroyMe.cs" />
      <Compile Include="Assets\hero\scripts\utils\ProjectileController.cs" />

@@ -11,22 +11,25 @@ public class PlayerHealth : MonoBehaviour
 	public int defense = 0;
 	//public GameObject fadeObj ;
 	//public UIActions ui;
-	Animator anim;
+	public Animator anim;
 	bool isDead;
 	bool damaged;	
 	//public Transform show_damage;
 	GameObject player;
 	Transform player_transform;
+	public GameObject gameController;
+	GameController gc;
 	//CharacterMotor characterMotor;
 	//SpriteRenderer renderer;
 
 
 	void Awake()
 	{
-		anim = GetComponent <Animator>();
+		
 		currentHealth = startingHealth;	
 		player = GameObject.FindGameObjectWithTag("Player");
 		player_transform= player.GetComponent<Transform>();
+		gc= gameController.GetComponent<GameController>();
 		//characterMotor = player.GetComponent<CharacterMotor>();
 		//renderer = transform.Find("animations").GetComponent <SpriteRenderer>();
 		//childObject.transform.parent.gameObject	
@@ -76,7 +79,8 @@ public class PlayerHealth : MonoBehaviour
 	{
 		
 		isDead = true;
-
+		anim.SetTrigger("Death");
+		gc.gotDead();
 		//characterMotor.Die();
 		//ui.playerDeath();
 
@@ -111,4 +115,8 @@ public class PlayerHealth : MonoBehaviour
     // 	HealthTextPercent.text = currentHealth.ToString() ;
     // 	healthSlider.value = currentHealth;
     // }
+    public int getCurrentHealth()
+    {
+    	return currentHealth;
+    }
 }

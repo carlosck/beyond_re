@@ -10,7 +10,7 @@ namespace UnityStandardAssets._2D
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
         private bool m_Shoot;
-        
+        private bool canControl = true;
         public float fireRate = 0.5f;
         float nextFire = 0;
 
@@ -22,34 +22,40 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
-            if (!m_Jump)
-            {
-                // Read the jump input in Update so button presses aren't missed.
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+            if(canControl){
+                if (!m_Jump)
+                {
+                    // Read the jump input in Update so button presses aren't missed.
+                    m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                }    
             }
+            
             
         }
 
 
         private void FixedUpdate()
         {
-            // Read the inputs.
-            bool crouch = Input.GetKey(KeyCode.DownArrow);
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            // Pass all parameters to the character control script.
-            if (CrossPlatformInputManager.GetButtonDown("Fire1"))
-            {
-                // Read the jump input in Update so button presses aren't missed.
-                //shoot();
-                if(Time.time>nextFire){
-                    nextFire= Time.time+fireRate;
-                    m_Shoot = true;
-                    //m_Character.ShootBullet();
+            if(canControl){
+                bool crouch = Input.GetKey(KeyCode.DownArrow);
+                float h = CrossPlatformInputManager.GetAxis("Horizontal");
+                // Pass all parameters to the character control script.
+                if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                {
+                    // Read the jump input in Update so button presses aren't missed.
+                    //shoot();
+                    if(Time.time>nextFire){
+                        nextFire= Time.time+fireRate;
+                        m_Shoot = true;
+                        //m_Character.ShootBullet();
+                    }
                 }
+                m_Character.Move(h, crouch, m_Jump,m_Shoot);
+                m_Jump = false;
+                m_Shoot = false; 
             }
-            m_Character.Move(h, crouch, m_Jump,m_Shoot);
-            m_Jump = false;
-            m_Shoot = false;
+            // Read the inputs.
+            
         }
         void shoot()
         {
@@ -58,6 +64,11 @@ namespace UnityStandardAssets._2D
                 m_Shoot = true;
                 m_Character.ShootBullet();
             }
+        }
+
+        public void setControl(bool control)
+        {
+            canControl= control;
         }
     }
 }

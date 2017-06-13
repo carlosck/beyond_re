@@ -15,29 +15,39 @@ public class enemyAttack : MonoBehaviour {
 	float timer;
 	
 	void Awake () {		
+		
+
 		player = GameObject.FindGameObjectWithTag("Player");
-		//playerHealth = player.GetComponent<PlayerHealth>();
+        playerHealth = player.GetComponent <PlayerHealth> ();
+		if (playerHealth == null) {
+		       
+		        Debug.Log("es null");
+		    }
+		Debug.Log("playerHealth"+playerHealth.getCurrentHealth());
+
+		
 		//anim = GetComponent<Animator>();
 		//anim = transform.Find("animContainer/animations").GetComponent <Animator>();
-		//health = GetComponent <HealthSystem>();
+		health = GetComponent <HealthSystem>();
 	}
 	
-	void OnTriggerEnter(Collider other)
+	void OnCollisionEnter2D(Collision2D other)
 	{
-		
-		if(other.gameObject == player)
+		Debug.Log("enter");
+		if(other.gameObject.tag == "Player")
 		{			
 			playerInRange = true;
-			anim.SetBool("close_to_player",true);
+			//anim.SetBool("close_to_player",true);
 		}
 	}
 	
-	void OnTriggerExit(Collider other)
+	void OnCollisionExit2D(Collision2D other)
 	{
-		if(other.gameObject == player)
+		Debug.Log("exit");
+		if(other.gameObject.tag == "Player")
 		{
 			playerInRange = false;
-			anim.SetBool("close_to_player",false);
+			//anim.SetBool("close_to_player",false);
 		}
 	}
 	// Update is called once per frame
@@ -49,10 +59,10 @@ public class enemyAttack : MonoBehaviour {
 			Attack();
 		}
 
-		if(playerHealth.currentHealth <=0)
-		{
-			//anim.setTrigger("playerDead");
-		}
+		// if(playerHealth.currentHealth <=0)
+		// {
+		// 	//anim.setTrigger("playerDead");
+		// }
 	}
 
 	void Attack()

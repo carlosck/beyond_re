@@ -11,8 +11,7 @@ public class HealthSystem : MonoBehaviour {
 	public int defense = 0;
 
 	Animator anim;
-	bool isDead;
-	bool damaged;
+	bool isDead;	
 	public Transform show_damage;
 	GameObject damage_enemy;
 	//public QuestContainer quest_container;
@@ -57,8 +56,7 @@ public class HealthSystem : MonoBehaviour {
 		if(total_damage<=0)
 			total_damage = 0;
 		else
-		{
-			damaged = true;
+		{			
 			currentHealth -= total_damage;
 		}
 		
