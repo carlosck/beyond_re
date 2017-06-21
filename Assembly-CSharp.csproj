@@ -53,6 +53,7 @@
      <Compile Include="Assets\enemies\scripts\enemyAttack.cs" />
      <Compile Include="Assets\enemies\scripts\enemyHealth.cs" />
      <Compile Include="Assets\enemies\scripts\enemyWalk.cs" />
+     <Compile Include="Assets\enemies\scripts\playerDetector.cs" />
      <Compile Include="Assets\hero\scripts\PlayerHealth.cs" />
      <Compile Include="Assets\hero\scripts\utils\DestroyMe.cs" />
      <Compile Include="Assets\hero\scripts\utils\ProjectileController.cs" />

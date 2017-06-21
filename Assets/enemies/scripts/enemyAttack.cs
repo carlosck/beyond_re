@@ -14,11 +14,13 @@ public class enemyAttack : MonoBehaviour {
 	bool playerInRange;
 	float timer;
 	
+	
 	void Awake () {		
 		
 
 		player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent <PlayerHealth> ();
+        anim=transform.Find("sprites").GetComponent<Animator>();
 		if (playerHealth == null) {
 		       
 		        Debug.Log("es null");
@@ -37,7 +39,7 @@ public class enemyAttack : MonoBehaviour {
 		if(other.gameObject.tag == "Player")
 		{			
 			playerInRange = true;
-			//anim.SetBool("close_to_player",true);
+			anim.SetBool("attack",true);
 		}
 	}
 	
@@ -47,7 +49,7 @@ public class enemyAttack : MonoBehaviour {
 		if(other.gameObject.tag == "Player")
 		{
 			playerInRange = false;
-			//anim.SetBool("close_to_player",false);
+			anim.SetBool("attack",false);
 		}
 	}
 	// Update is called once per frame

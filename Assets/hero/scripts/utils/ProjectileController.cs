@@ -18,7 +18,7 @@ public class ProjectileController : MonoBehaviour {
 		
 	}
 
-	void OnCollisionEnter2D(Collision2D coll){
+	void OnTriggerEnter2D(Collider2D coll){
 		Debug.Log(coll.gameObject.tag);
 		if (coll.gameObject.tag == "wall")
 		{
