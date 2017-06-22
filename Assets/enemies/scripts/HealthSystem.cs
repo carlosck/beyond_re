@@ -37,6 +37,7 @@ public class HealthSystem : MonoBehaviour {
 		//anim.speed= Random.Range(0.8f,1.2f);
 		//healthSlider = transform.Find("Canvas/HealtSlider").GetComponent <Slider>();
 		//healthSlider.maxValue = startingHealth;
+		anim=transform.Find("sprites").GetComponent<Animator>();
 		currentHealth = startingHealth;	
 		// HealthTextPercent.text = currentHealth.ToString() ;
 		// damage_enemy = (GameObject)Resources.Load ("prefabs/damage_enemy", typeof(GameObject));
@@ -88,13 +89,14 @@ public class HealthSystem : MonoBehaviour {
 	void Death()
 	{
 		isDead = true;
-		//anim.SetInteger("Direction", 0);
+		
+		anim.SetBool("death",true);
 		//characterMotor.Die();
 		
 		//bool isPartOfaQuest= quest_container.enemyKilled(gameObject);
 		
 		//if(!isPartOfaQuest)
-			Destroy(this.gameObject,0.5f);		
+		Destroy(this.gameObject,1f);		
 	}
 
 	void ShowDamage(int amount)

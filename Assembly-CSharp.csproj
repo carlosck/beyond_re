@@ -51,7 +51,10 @@
      <Compile Include="Assets\enemies\scripts\behavior.cs" />
      <Compile Include="Assets\enemies\scripts\defendTerritory.cs" />
      <Compile Include="Assets\enemies\scripts\enemyAttack.cs" />
+     <Compile Include="Assets\enemies\scripts\enemyCrawler.cs" />
+     <Compile Include="Assets\enemies\scripts\enemyFollows.cs" />
      <Compile Include="Assets\enemies\scripts\enemyHealth.cs" />
+     <Compile Include="Assets\enemies\scripts\enemyLimits.cs" />
      <Compile Include="Assets\enemies\scripts\enemyWalk.cs" />
      <Compile Include="Assets\enemies\scripts\playerDetector.cs" />
      <Compile Include="Assets\hero\scripts\PlayerHealth.cs" />

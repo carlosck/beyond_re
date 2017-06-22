@@ -10,7 +10,7 @@ public class playerDetector : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		parent=transform.parent;
-		var children = parent.GetComponentsInChildren<Transform>();
+		
 		for (int i = 0; i < parent.childCount; i++){
 			Transform child = parent.GetChild(i);
 			Debug.Log(child.tag);
