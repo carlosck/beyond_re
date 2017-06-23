@@ -72,6 +72,7 @@ public class enemyFlyer : enemyLimits {
 		
 	}
 	public override void StartWalk(){
+		
 		if(transform.position.x>currentTarget.transform.position.x)
 		{			
 			flip(1);

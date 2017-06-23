@@ -13,14 +13,8 @@ public class enemyCrawler : enemyFlyer {
 			
 		
 		desiredVelocity = (currentTarget.transform.position - transform.position).normalized * speed;
-		Debug.Log(desiredVelocity.y);
-		// if(Mathf.Abs(desiredVelocity.y)>Mathf.Abs(desiredVelocity.x))
-		// {
-		// 	desiredVelocity.x=0;
-		// }
-		// else{
-		// 	desiredVelocity.y=0;
-		// }
+		
+		
 		anim.SetBool("walk",true);
 
 		busy=true;
