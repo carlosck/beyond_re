@@ -12,8 +12,7 @@ public class playerDetector : MonoBehaviour {
 		parent=transform.parent;
 		
 		for (int i = 0; i < parent.childCount; i++){
-			Transform child = parent.GetChild(i);
-			Debug.Log(child.tag);
+			Transform child = parent.GetChild(i);			
 			if(child.tag=="Enemy")
 			{
 				enemy=child;
@@ -28,8 +27,7 @@ public class playerDetector : MonoBehaviour {
 		
 		
 		if(other.gameObject == player)
-		{			
-			Debug.Log("setPlayerInRange s");
+		{						
 			enemy.SendMessage("setPlayerInRange", true);
 		}
 	}
@@ -37,8 +35,7 @@ public class playerDetector : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other)
 	{
 		if(other.gameObject == player)
-		{			
-			Debug.Log("setPlayerInRange n");
+		{						
 			enemy.SendMessage("setPlayerInRange", false);
 		}
 	}

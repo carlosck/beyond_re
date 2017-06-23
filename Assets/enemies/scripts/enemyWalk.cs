@@ -12,6 +12,7 @@ public class enemyWalk : MonoBehaviour {
 	//Rigidbody2D rb;
 	public bool busy=false;
 	// Use this for initialization
+	
 	public virtual void Start () {
 		anim=transform.Find("sprites").GetComponent<Animator>();
 	}
@@ -36,11 +37,10 @@ public class enemyWalk : MonoBehaviour {
 		
 
 	}
-	public virtual void getNextTarget(){
-		Debug.Log("getNextTarget parent");
+	public virtual void getNextTarget(){		
 		StartWalk();
 	}
-	public void StartWalk()
+	public virtual void StartWalk()
 	{
 		if(transform.position.x>currentTarget.transform.position.x)
 		{
@@ -56,7 +56,7 @@ public class enemyWalk : MonoBehaviour {
 		busy=true;
 	}
 	
-	public void StopWalk(){
+	public virtual void StopWalk(){
 		
 		busy=false;
 		anim.SetBool("walk",false);
@@ -71,10 +71,10 @@ public class enemyWalk : MonoBehaviour {
 		}
 		
 	}
-	void flip(int scale){
+	public virtual void flip(int scale){
 		Vector3 theScale = transform.localScale;
-		theScale.x = Mathf.Abs(theScale.x) *scale;
-		transform.localScale = theScale;
+		theScale.x = Mathf.Abs(theScale.x) *scale;		
+		anim.transform.localScale = theScale;
 	}
 	
 }

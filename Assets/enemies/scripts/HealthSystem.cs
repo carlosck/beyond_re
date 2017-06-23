@@ -96,7 +96,7 @@ public class HealthSystem : MonoBehaviour {
 		//bool isPartOfaQuest= quest_container.enemyKilled(gameObject);
 		
 		//if(!isPartOfaQuest)
-		Destroy(this.gameObject,1f);		
+		Destroy(transform.parent.gameObject,1f);		
 	}
 
 	void ShowDamage(int amount)

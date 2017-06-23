@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections;	
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ public class enemyLimits : enemyWalk {
 	// Update is called once per frame
 	
 	public override void getNextTarget(){
-		Debug.Log("getNextTarget son");
+		
 		currentLimitNumber=currentLimitNumber+1;
 		
 		if(currentLimitNumber==limits.Length)

@@ -2,118 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemyCrawler : enemyLimits {
+public class enemyCrawler : enemyFlyer {
 
 	// Use this for initialization
 	
 	// Update is called once per frame
-	bool forward = true;
-	Rigidbody2D rb;
-
-	public override void Start(){
-		anim=transform.Find("sprites").GetComponent<Animator>();
-		rb = transform.GetComponent<Rigidbody2D>();
-	}
-	public override void FixedUpdate(){
+	float x_previous=0f;
+	
+	public override void StartWalk(){
+			
 		
-		if(busy & !anim.GetBool("death"))
-		{
-			if(Vector2.Distance(currentTarget.transform.position, transform.position)<distanceToTarget){				
-				busy= false;
-				getNextTarget();
-				
-			}
-			else{				
-					//transform.Translate(new Vector2 (speed, 0)*Time.deltaTime);
-					var dist = Vector2.Distance(currentTarget.transform.position, transform.position);
-					
-					var lookDir = currentTarget.transform.position - transform.position;
-					if(Mathf.Abs(lookDir.y)>Mathf.Abs(lookDir.x))
-					{
-						lookDir.x=0;
-					}
-					else{
-						lookDir.y=0;
-					}
-					if(currentTarget.transform.position.x<transform.position.x)
-					{
-						//speed= Mathf.Abs(speed)*-1 ;
-						print("speed -1");
-						rb.velocity = new Vector2((lookDir.normalized.x*speed*Time.deltaTime)*-1,lookDir.normalized.y*speed*Time.deltaTime);
-					}
-					else{
-						rb.velocity = new Vector2(lookDir.normalized.x*speed*Time.deltaTime,lookDir.normalized.y*speed*Time.deltaTime);
-					}
-					
-					//lookDir.y = 0;
-					//rb.velocity = new Vector2(rb.velocity.x * speed, rb.velocity.y);
-					
-					print(lookDir.normalized.x);
-					//rb.velocity= new Vector2(lookDir.x *(speed  * Time.deltaTime),lookDir.y *(speed  * Time.deltaTime));
-				}
-		}	
-		// if(!anim.GetBool("death")) {
-		// 	if(Mathf.Abs(transform.position.x-currentTarget.transform.position.x)<distanceToTarget){				
-		// 			busy= false;
-		// 			StopWalk();
-					
-		// 		}
-		// 		else{				
-		// 			//rb.velocity = new Vector2(rb.velocity.x * speed, rb.velocity.y* speed);
-		// 			transform.Translate(new Vector2 (speed, 0)*Time.deltaTime);
-		// 			StartWalk();
-					
-		// 		}		
-		// }
-
-		// if(busy & !anim.GetBool("death"))
+		desiredVelocity = (currentTarget.transform.position - transform.position).normalized * speed;
+		Debug.Log(desiredVelocity.y);
+		// if(Mathf.Abs(desiredVelocity.y)>Mathf.Abs(desiredVelocity.x))
 		// {
-		// 	if(Mathf.Abs(transform.position.x-currentTarget.transform.position.x)<distanceToTarget){				
-		// 		busy= false;
-		// 		getNextTarget();
-		// 		Debug.Log("llegó");
-				
-		// 	}
-		// 	else{				
-		// 			var dist = Vector2.Distance(currentTarget.transform.position, transform.position);
-		// 			var lookDir = currentTarget.transform.position - transform.position;
-		// 			lookDir.y = 0;
+		// 	desiredVelocity.x=0;
+		// }
+		// else{
+		// 	desiredVelocity.y=0;
+		// }
+		anim.SetBool("walk",true);
 
-		// 			//transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(lookDir), speed*Time.deltaTime);
-
-		// 			rb.velocity = new Vector2(rb.velocity.x * speed, rb.velocity.y);
-					
-		// 		}
-		// }	
-		
-		
-
+		busy=true;
+		flip(0);
 	}
-
-	public override void getNextTarget(){		
-		if(forward){
-			currentLimitNumber=currentLimitNumber+1;
-			if(currentLimitNumber==limits.Length)
-			{
-				forward= false;
-				currentLimitNumber=limits.Length-1;
-			}
+	public virtual void flip(int scale){
+		Vector3 theScale = anim.transform.localScale;
+		if(transform.position.x>currentTarget.transform.position.x)
+		{			
+			theScale.x = Mathf.Abs(theScale.x) *1;
 		}
-		else
+		else{			
+			theScale.x = Mathf.Abs(theScale.x) *-1;
+		}
+		Vector3 temp = anim.transform.rotation.eulerAngles;
+		 
+		 
+		if(Mathf.Abs(desiredVelocity.y)<1)
 		{
-			currentLimitNumber=currentLimitNumber-1;
-			if(currentLimitNumber<0)
-			{
-				forward= true;
-				currentLimitNumber=1;
-			}
+			temp.z = 0.0f;
 		}
-		
-		
+		else{
+			if(desiredVelocity.y>1)
+			{
+				if(transform.position.x>x_previous)
+				{
+					temp.z = 90.0f;	
+				}
+				else{
+					temp.z = -90.0f;		
+				}
+				
+			}
+			else{
+				if(transform.position.x>x_previous)
+				{
+					temp.z = -90.0f;	
+				}
+				else{
+					temp.z = 90.0f;		
+				}
 
-		currentTarget= limits[currentLimitNumber];
-		
-		StartWalk();
-		
+			}
+
+		}		
+		anim.transform.rotation = Quaternion.Euler(temp);
+		//anim.transform.localScale = theScale;
+		//anim.flipX=true;
+		x_previous= transform.position.x;			
 	}
 }

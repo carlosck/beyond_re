@@ -52,6 +52,7 @@
      <Compile Include="Assets\enemies\scripts\defendTerritory.cs" />
      <Compile Include="Assets\enemies\scripts\enemyAttack.cs" />
      <Compile Include="Assets\enemies\scripts\enemyCrawler.cs" />
+     <Compile Include="Assets\enemies\scripts\enemyFlyer.cs" />
      <Compile Include="Assets\enemies\scripts\enemyFollows.cs" />
      <Compile Include="Assets\enemies\scripts\enemyHealth.cs" />
      <Compile Include="Assets\enemies\scripts\enemyLimits.cs" />

@@ -24,8 +24,7 @@ public class enemyAttack : MonoBehaviour {
 		if (playerHealth == null) {
 		       
 		        Debug.Log("es null");
-		    }
-		Debug.Log("playerHealth"+playerHealth.getCurrentHealth());
+		    }		
 
 		
 		//anim = GetComponent<Animator>();
@@ -35,7 +34,7 @@ public class enemyAttack : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("enter");
+		
 		if(other.gameObject.tag == "Player")
 		{			
 			playerInRange = true;
@@ -45,7 +44,7 @@ public class enemyAttack : MonoBehaviour {
 	
 	void OnCollisionExit2D(Collision2D other)
 	{
-		Debug.Log("exit");
+		
 		if(other.gameObject.tag == "Player")
 		{
 			playerInRange = false;
