@@ -148,5 +148,9 @@ namespace UnityStandardAssets._2D
             
             
         }
+        public void pushArea(bool _pushing)
+        {
+            m_Anim.SetBool("pushing", _pushing);
+        }
     }
 }
