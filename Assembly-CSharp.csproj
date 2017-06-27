@@ -46,7 +46,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\enemies\scripts\HealthSystem.cs" />
      <Compile Include="Assets\enemies\scripts\behavior.cs" />
      <Compile Include="Assets\enemies\scripts\defendTerritory.cs" />
@@ -60,8 +59,13 @@
      <Compile Include="Assets\enemies\scripts\playerDetector.cs" />
      <Compile Include="Assets\hero\scripts\PlayerHealth.cs" />
      <Compile Include="Assets\hero\scripts\utils\DestroyMe.cs" />
+     <Compile Include="Assets\hero\scripts\utils\EsceneController.cs" />
      <Compile Include="Assets\hero\scripts\utils\ProjectileController.cs" />
+     <Compile Include="Assets\hero\scripts\utils\killZone.cs" />
      <Compile Include="Assets\hero\scripts\utils\pushDetector.cs" />
+     <Compile Include="Assets\menu\scripts\GameController.cs" />
+     <Compile Include="Assets\menu\scripts\InitScreen.cs" />
+     <Compile Include="Assets\menu\scripts\deathScreen.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

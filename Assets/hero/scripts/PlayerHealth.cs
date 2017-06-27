@@ -29,22 +29,17 @@ public class PlayerHealth : MonoBehaviour
 		currentHealth = startingHealth;	
 		player = GameObject.FindGameObjectWithTag("Player");
 		player_transform= player.GetComponent<Transform>();
-		gc= gameController.GetComponent<GameController>();
+		gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+		
 		//characterMotor = player.GetComponent<CharacterMotor>();
 		//renderer = transform.Find("animations").GetComponent <SpriteRenderer>();
 		//childObject.transform.parent.gameObject	
 	}
-
-	void Update()
-	{
-		
-	}
+	
 
 	public void TakeDamage(int amount)
 	{
 		if(isDead) {return ;}
-
-
 		
 		int total_damage = amount-defense;
 		if(total_damage<=0)
