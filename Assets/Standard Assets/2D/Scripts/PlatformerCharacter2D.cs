@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D
@@ -107,10 +108,10 @@ namespace UnityStandardAssets._2D
             {
                 ShootBullet();
             }
-            if(!shoot && m_Anim.GetBool("Shoot"))
-           {
-                m_Anim.SetBool("Shoot", shoot);
-           } 
+           //  if(!shoot && m_Anim.GetBool("Shoot"))
+           // {
+           //      m_Anim.SetBool("Shoot", shoot);
+           // } 
 
 
 
@@ -133,7 +134,8 @@ namespace UnityStandardAssets._2D
         {
             GameObject Clone;
             //Clone = (Instantiate(bulletPrefab, transform.position,transform.rotation)) as GameObject;
-            m_Anim.SetBool("Shoot", true);
+            m_Anim.SetBool("Shoot",true);
+            StartCoroutine(stopShoot());
             Clone = (Instantiate(bulletPrefab, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,0))));
             Vector2 thrust;
             if(m_FacingRight)
@@ -151,6 +153,10 @@ namespace UnityStandardAssets._2D
         public void pushArea(bool _pushing)
         {
             m_Anim.SetBool("pushing", _pushing);
+        }
+        IEnumerator stopShoot(){
+            yield return new WaitForSeconds(0.4f);
+            m_Anim.SetBool("Shoot",false);
         }
     }
 }

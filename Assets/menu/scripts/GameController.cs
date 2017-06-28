@@ -13,7 +13,8 @@ public class GameController : MonoBehaviour {
 	public GameObject introCamera;
 	public GameObject currentCamera;
 	public GameObject player;
-	public string currentScene;
+	public int currentScene=0;
+	public string[] scenes;
 	Platformer2DUserControl plataformController ;
 
 	
@@ -22,36 +23,30 @@ public class GameController : MonoBehaviour {
 				
 		ui_start.SetActive(true);
 		ui_death.SetActive(false);
-		//plataformController= player.GetComponent<Platformer2DUserControl>();
+		//Todo load from disk
+		currentScene=0;
+		
 		
 	}
 	
 	public void startContinue(){
-		// SceneManager.LoadScene("scene_1_1", LoadSceneMode.Additive);
-		// ui_start.SetActive(false);
-		// introCamera.enabled =false ;
-		// SceneManager.SetActiveScene (SceneManager.GetSceneByName ("scene_1_1"));
-		StartCoroutine(LoadGameScene("scene_1_1"));
-		currentScene= "scene_1_1";
+		
+		StartCoroutine(LoadGameScene(currentScene));
+		
 
 	}
 	public void startNewGame(){
-		// SceneManager.LoadScene("scene_1_1", LoadSceneMode.Additive);
-		// ui_start.SetActive(false);
-		// introCamera.enabled =false ;
-		// SceneManager.SetActiveScene (SceneManager.GetSceneByName ("scene_1_1"));
-		//SceneManager.LoadScene("scene_1_1", LoadSceneMode.Additive);
-		//StartCoroutine(LoadGameScene());
+		
 
-		StartCoroutine(LoadGameScene("scene_1_1"));
-		currentScene= "scene_1_1";
+		StartCoroutine(LoadGameScene(0));
+		
 
 	}
 
-	IEnumerator LoadGameScene(string nameEscene)
+	IEnumerator LoadGameScene(int SceneNumber)
 	 {
 		 Debug.Log ( "START Load Async" );
-		 var result = SceneManager.LoadSceneAsync ( nameEscene, LoadSceneMode.Additive );
+		 var result = SceneManager.LoadSceneAsync ( scenes[SceneNumber], LoadSceneMode.Additive );
 		 result.allowSceneActivation = true;
 
 		 while (!result.isDone) 
@@ -63,8 +58,8 @@ public class GameController : MonoBehaviour {
 		 // still scene one should be active, tryed it as workaround, did not help
 		 ui_start.SetActive(false);
 		 introCamera.SetActive(false) ;
-		 currentScene= nameEscene;
-		 SceneManager.SetActiveScene (SceneManager.GetSceneByName (nameEscene));		 
+		 SceneManager.SetActiveScene (SceneManager.GetSceneByName (scenes[SceneNumber]));		 
+		 currentScene= SceneNumber;
 	}
 
 	public void gotDead()
@@ -109,6 +104,14 @@ public class GameController : MonoBehaviour {
     	currentCamera= _camera;
     	//Debug.Log(" --------- initScene ---------- ");
     	Time.timeScale=1;
+    }
+    public void goal(){
+    	if(currentScene<scenes.Length-1){
+    		SceneManager.UnloadScene(currentScene);
+    		currentScene++;
+    		LoadGameScene(currentScene);
+    	}
+    	
     }
 	
 	

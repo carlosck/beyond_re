@@ -29,7 +29,11 @@ public class PlayerHealth : MonoBehaviour
 		currentHealth = startingHealth;	
 		player = GameObject.FindGameObjectWithTag("Player");
 		player_transform= player.GetComponent<Transform>();
-		gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+		if(GameObject.FindGameObjectWithTag("GameController")!=null)
+		{
+			gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();	
+		}
+		
 		
 		//characterMotor = player.GetComponent<CharacterMotor>();
 		//renderer = transform.Find("animations").GetComponent <SpriteRenderer>();
@@ -74,10 +78,9 @@ public class PlayerHealth : MonoBehaviour
 	{
 		
 		isDead = true;
-		anim.SetTrigger("Death");
+		anim.SetBool("Death",true);
 		gc.gotDead();
-		//characterMotor.Die();
-		//ui.playerDeath();
+		
 
 	}
 	
