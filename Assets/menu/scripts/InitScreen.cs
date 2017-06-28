@@ -80,21 +80,25 @@ public class InitScreen : MonoBehaviour {
 			break;			
 		}
 	}
-	void continueGame()
+	public void continueGame()
 	{
-		//print("continue");
-		gc.startContinue();
-		//Quest currentQuest=questContainer.getQuestAt(0);		
 		
+		gc.startContinue();				
 	}
-	void newGame()
-	{
-		//print("newGame");
-		gc.startNewGame();
-		//animMenu.SetTrigger("exit");
-		//gameQuestContainer.startGame();
-		//ui.closeMenu();
+	public void newGame()
+	{		
+		gc.startNewGame();		
+	}
+	public void mouseOverNewGame(){
 		
+		current_position=1;
+		update_select_position();
+	}
+
+	public void mouseOverContinue(){
+		
+		current_position=0;
+		update_select_position();
 	}
 	
 

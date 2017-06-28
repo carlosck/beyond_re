@@ -68,8 +68,7 @@ public class deathScreen : MonoBehaviour {
 	}
 	public void selectMenu()
 	{
-		// Debug.Log("selectMenu from death_menu");
-		// Debug.Log(current_position);
+		
 		switch(current_position)
 		{
 			case 0: 
@@ -80,24 +79,28 @@ public class deathScreen : MonoBehaviour {
 			break;			
 		}
 	}
-	void continueGame()
-	{
-		//print("continue");
-		gc.deathContinue();
-		//Quest currentQuest=questContainer.getQuestAt(0);		
+	public void continueGame()
+	{		
+		gc.deathContinue();		
 		
 	}
-	void exitGame()
+	public void exitGame()
 	{
-		//print("exitGame");
-		gc.deathExit();
-		//animMenu.SetTrigger("exit");
-		//gameQuestContainer.startGame();
-		//ui.closeMenu();
+		gc.deathExit();		
 		
 	}
 	
+	public void mouseOverContinue(){
+		
+		current_position=1;
+		update_select_position();
+	}
 
+	public void mouseOverExit(){
+		
+		current_position=0;
+		update_select_position();
+	}
 	
 	
 	public bool isBusy(){
