@@ -81,6 +81,7 @@ public class deathScreen : MonoBehaviour {
 	}
 	public void continueGame()
 	{		
+		Debug.Log("continueGame");
 		gc.deathContinue();		
 		
 	}

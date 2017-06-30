@@ -74,19 +74,21 @@ public class GameController : MonoBehaviour {
 		StartCoroutine(letEmDie(0f));
 	}
 	public void deathContinue(){
+		Debug.Log("deathContinue");
 		introCamera.SetActive(true);
 		ui_death.SetActive(false);		
 		Time.timeScale=1;
 		restartLevel();
 	}
 	public void deathExit(){
-		SceneManager.UnloadScene(currentScene);
+		SceneManager.UnloadScene(scenes[currentScene]);
 		ui_start.SetActive(true);
 		ui_death.SetActive(false);
 	}
 	private void restartLevel (){
+		Debug.Log("rstart");
 		plataformController.setControl(true);
-		SceneManager.UnloadScene(currentScene);
+		SceneManager.UnloadScene(scenes[currentScene]);
 		StartCoroutine(LoadGameScene(currentScene));
 	}
 	
@@ -102,12 +104,12 @@ public class GameController : MonoBehaviour {
     	player= _player;
     	plataformController= player.GetComponent<Platformer2DUserControl>();
     	currentCamera= _camera;
-    	//Debug.Log(" --------- initScene ---------- ");
+    	Debug.Log(" --------- initScene ---------- ");
     	Time.timeScale=1;
     }
     public void goal(){
     	if(currentScene<scenes.Length-1){
-    		SceneManager.UnloadScene(currentScene);
+    		SceneManager.UnloadScene(scenes[currentScene]);
     		currentScene++;
     		LoadGameScene(currentScene);
     	}
