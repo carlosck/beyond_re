@@ -74,7 +74,11 @@ namespace UnityStandardAssets._2D
             if (m_Grounded || m_AirControl)
             {
                 // Reduce the speed if crouching by the crouchSpeed multiplier
-                move = (crouch ? move*m_CrouchSpeed : move);
+                if(m_Grounded)
+                {
+                    move = (crouch ? move*m_CrouchSpeed : move);    
+                }
+                
 
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
                 m_Anim.SetFloat("Speed", Mathf.Abs(move));
@@ -144,8 +148,12 @@ namespace UnityStandardAssets._2D
             }
             else
             {                
-                thrust = new Vector2(-rocketSpeed, 0);                
+                thrust = new Vector2(-rocketSpeed, 0);
+                Vector3 theScale = Clone.transform.localScale;
+                theScale.x *= -1;
+                Clone.transform.localScale = theScale;                
             }
+            
             Clone.GetComponent<Rigidbody2D>().AddForce(thrust * 10);
             
             
