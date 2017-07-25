@@ -17,13 +17,23 @@ namespace UnityStandardAssets._2D
         private bool m_Grounded;            // Whether or not the player is grounded.
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
-        private Animator m_Anim;            // Reference to the player's animator component.
+        private Animator m_Anim;
+        private Animator firePower_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
         public GameObject bulletPrefab;
         public Transform shootOrigin;
         public float rocketSpeed;
+        public float dashSpeed;
+
+
+        private Vector2 boostSpeed = new Vector2(100,0);
+        private bool canBoost = true;
+        
+        public float boostTime = 0.25f;
+        public int boostPower = 1000;
+        private bool dashing = false;
 
         private void Awake()
         {
@@ -31,6 +41,7 @@ namespace UnityStandardAssets._2D
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_Anim = transform.Find("sprites").GetComponent<Animator>();
+            firePower_Anim = transform.Find("shootPower").GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
@@ -55,9 +66,11 @@ namespace UnityStandardAssets._2D
         }
 
 
-        public void Move(float move, bool crouch, bool jump,bool shoot)
+        public void Move(float move, bool crouch, bool jump,bool shoot,float firePower,bool dash)
         {
+            
             // If crouching, check to see if the character can stand up
+
             if (!crouch && m_Anim.GetBool("Crouch"))
             {
                 // If the character has a ceiling preventing them from standing up, keep them crouching
@@ -84,7 +97,14 @@ namespace UnityStandardAssets._2D
                 m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
                 // Move the character
-                m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
+                if(dashing)
+                {
+                    m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, 0f);
+                }
+                else
+                {
+                    m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);   
+                }
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -107,10 +127,17 @@ namespace UnityStandardAssets._2D
                 m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
+            Debug.Log("firepower "+firePower);
+            firePower_Anim.SetFloat("firePower", firePower);
             
             if(shoot)
             {
                 ShootBullet();
+            }
+            if(dash)
+            {
+                Debug.Log("move Dash");
+                goDash();
             }
            //  if(!shoot && m_Anim.GetBool("Shoot"))
            // {
@@ -165,6 +192,70 @@ namespace UnityStandardAssets._2D
         IEnumerator stopShoot(){
             yield return new WaitForSeconds(0.4f);
             m_Anim.SetBool("Shoot",false);
+        }
+
+        public void goDash()
+        {
+            
+            //Clone = (Instantiate(bulletPrefab, transform.position,transform.rotation)) as GameObject;            
+            StartCoroutine( Boost() );
+            m_Anim.SetBool("dashing",true);
+            dashing= true;
+            StartCoroutine(stopDash());
+            
+            // Vector2 thrust;
+            // if(m_FacingRight)
+            // {
+            //     thrust = new Vector2(dashSpeed, 0);
+            // }
+            // else
+            // {                
+            //     thrust = new Vector2(-dashSpeed, 0);
+            //     Vector3 theScale = transform.localScale;
+            //     theScale.x *= -1;
+            //     transform.localScale = theScale;                
+            // }
+            
+            //m_Rigidbody2D.AddForce(thrust * 10);
+            //m_Rigidbody2D.AddForce(new Vector2(m_JumpForce,0f));
+            
+            //m_Rigidbody2D.AddForce(Vector3.right * 7000);
+            //m_Rigidbody2D.velocity = new Vector2(move*100, m_Rigidbody2D.velocity.y);
+            
+            //m_Rigidbody2D.velocity = new Vector2(10*m_MaxSpeed, m_Rigidbody2D.velocity.y);
+            //m_Anim.SetFloat("Speed", Mathf.Abs(move));
+
+            // Move the character
+            //m_Rigidbody2D.velocity = new Vector2(10*m_MaxSpeed, m_Rigidbody2D.velocity.y);
+            
+        }
+
+        IEnumerator stopDash(){
+            yield return new WaitForSeconds(boostTime-0.1f);            
+            m_Anim.SetBool("dashing",false);
+            dashing=false;
+        }
+
+        IEnumerator Boost(){
+            float time=0; //create float to store the time this coroutine is operating            
+            //canBoost = false; //set canBoost to false so that we can't keep boosting while boosting
+     
+            while(boostTime > time) //we call this loop every frame while our custom boostDuration is a higher value than the "time" variable in this coroutine
+            {
+                time += Time.deltaTime; //Increase our "time" variable by the amount of time that it has been since the last update
+                if(m_FacingRight)
+                {
+                    m_Rigidbody2D.AddForce(new Vector2(boostPower,0f));
+                }
+                else
+                {                
+                    m_Rigidbody2D.AddForce(new Vector2(-boostPower,0f));                
+                }
+
+                //m_Rigidbody2D.velocity = boostSpeed; //set our rigidbody velocity to a custom velocity every frame, so that we get a steady boost direction like in Megaman
+                yield return 0; //go to next frame
+            }
+
         }
     }
 }
