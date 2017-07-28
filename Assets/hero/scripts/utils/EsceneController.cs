@@ -10,7 +10,6 @@ public class EsceneController : MonoBehaviour {
 	void Awake () {
 		GameController gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 		gc.initScene(player,camera);
-	}
-	
+	}	
 	
 }

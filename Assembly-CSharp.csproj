@@ -60,6 +60,7 @@
      <Compile Include="Assets\hero\scripts\PlayerHealth.cs" />
      <Compile Include="Assets\hero\scripts\utils\DestroyMe.cs" />
      <Compile Include="Assets\hero\scripts\utils\EsceneController.cs" />
+     <Compile Include="Assets\hero\scripts\utils\GoalDetector.cs" />
      <Compile Include="Assets\hero\scripts\utils\ProjectileController.cs" />
      <Compile Include="Assets\hero\scripts\utils\killZone.cs" />
      <Compile Include="Assets\hero\scripts\utils\pushDetector.cs" />

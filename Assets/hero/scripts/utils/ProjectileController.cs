@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour {
 
-	Rigidbody2D rb;
-	public float rocketSpeed;
+	Rigidbody2D rb;	
 
 	// Use this for initialization
 	void Awake () {
-		rb= GetComponent<Rigidbody2D>();
-		//rb.AddForce(new Vector2(1,0)*rocketSpeed,ForceMode2D.Impulse);
+		rb= GetComponent<Rigidbody2D>();		
 	}
 	
 	// Update is called once per frame

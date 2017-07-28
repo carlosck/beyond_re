@@ -11,6 +11,7 @@ namespace UnityStandardAssets._2D
         private bool m_Jump;
         private bool m_Shoot;
         private bool m_Dash;
+        private bool m_PointingUp;
         private bool canControl = true;
         public float fireRate = 0.5f;
         public float dashRate = 5.0f;
@@ -21,8 +22,9 @@ namespace UnityStandardAssets._2D
         public float maxFirePower = 100f;
         public float firePowerIncrements = 10f;
         private bool holdingPower= false;
-         public float firePowerIncrementsRate = 0.2f;
-         float nextFireIncrement = 0;
+        public float firePowerIncrementsRate = 0.2f;
+        float nextFireIncrement = 0;
+
 
         private void Awake()
         {
@@ -92,11 +94,20 @@ namespace UnityStandardAssets._2D
                     }
 
                 }
-
-                m_Character.Move(h, crouch, m_Jump,m_Shoot,FirePower,m_Dash);
+                if (CrossPlatformInputManager.GetButton("Vertical"))
+                {
+                    if(Input.GetAxis("Vertical") > 0)
+                    {
+                        Debug.Log("up");
+                        m_PointingUp= true;    
+                    }
+                    
+                }
+                m_Character.Move(h, crouch, m_Jump,m_Shoot,FirePower,m_Dash,m_PointingUp);
                 m_Jump = false;
                 m_Shoot = false; 
                 m_Dash = false;
+                m_PointingUp = false;
             }
             // Read the inputs.
             

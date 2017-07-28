@@ -35,13 +35,16 @@ namespace UnityStandardAssets._2D
         public int boostPower = 1000;
         private bool dashing = false;
 
+        public int JumpsAvailable = 1;
+        private int jumpCounter=0;
+
         private void Awake()
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_Anim = transform.Find("sprites").GetComponent<Animator>();
-            firePower_Anim = transform.Find("shootPower").GetComponent<Animator>();
+            firePower_Anim = transform.Find("sprites").transform.Find("shootPower").GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
@@ -59,14 +62,16 @@ namespace UnityStandardAssets._2D
                     m_Grounded = true;
             }
             m_Anim.SetBool("Ground", m_Grounded);
-
+            if(m_Grounded){
+                jumpCounter=0;
+            }
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
             
         }
 
 
-        public void Move(float move, bool crouch, bool jump,bool shoot,float firePower,bool dash)
+        public void Move(float move, bool crouch, bool jump,bool shoot,float firePower,bool dash,bool pointingUp)
         {
             
             // If crouching, check to see if the character can stand up
@@ -82,7 +87,7 @@ namespace UnityStandardAssets._2D
 
             // Set whether or not the character is crouching in the animator
             m_Anim.SetBool("Crouch", crouch);
-
+            m_Anim.SetBool("PointingUp",pointingUp);
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
             {
@@ -123,16 +128,40 @@ namespace UnityStandardAssets._2D
             if (m_Grounded && jump && m_Anim.GetBool("Ground"))
             {
                 // Add a vertical force to the player.
+                jumpCounter++;
                 m_Grounded = false;
                 m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
-            Debug.Log("firepower "+firePower);
+            else
+            {
+                if(jump && jumpCounter<JumpsAvailable)
+                {
+                    jumpCounter++;
+                    m_Grounded = false;
+                    m_Anim.SetBool("Ground", false);
+                    m_Rigidbody2D.velocity= new Vector2(0f,0f);
+                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                }
+            }
+
+            
             firePower_Anim.SetFloat("firePower", firePower);
             
+            
+
             if(shoot)
             {
-                ShootBullet();
+                Debug.Log(pointingUp);
+                if(pointingUp)
+                {
+                    ShootBulletUp();    
+                }
+                else
+                {
+                    ShootBullet();
+                }
+                
             }
             if(dash)
             {
@@ -185,6 +214,22 @@ namespace UnityStandardAssets._2D
             
             
         }
+        public void ShootBulletUp()
+        {
+            GameObject Clone;
+            //Clone = (Instantiate(bulletPrefab, transform.position,transform.rotation)) as GameObject;
+            m_Anim.SetBool("ShootUp",true);
+            StartCoroutine(stopShoot());
+            Clone = (Instantiate(bulletPrefab, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,90))));
+            Vector2 thrust;
+                          
+            thrust = new Vector2(0, rocketSpeed);
+            //thrust = new Vector2(rocketSpeed, 0);
+                          
+            Clone.GetComponent<Rigidbody2D>().AddForce(thrust * 5);
+            
+            
+        }
         public void pushArea(bool _pushing)
         {
             m_Anim.SetBool("pushing", _pushing);
@@ -192,6 +237,7 @@ namespace UnityStandardAssets._2D
         IEnumerator stopShoot(){
             yield return new WaitForSeconds(0.4f);
             m_Anim.SetBool("Shoot",false);
+            m_Anim.SetBool("ShootUp",false);
         }
 
         public void goDash()
@@ -203,30 +249,7 @@ namespace UnityStandardAssets._2D
             dashing= true;
             StartCoroutine(stopDash());
             
-            // Vector2 thrust;
-            // if(m_FacingRight)
-            // {
-            //     thrust = new Vector2(dashSpeed, 0);
-            // }
-            // else
-            // {                
-            //     thrust = new Vector2(-dashSpeed, 0);
-            //     Vector3 theScale = transform.localScale;
-            //     theScale.x *= -1;
-            //     transform.localScale = theScale;                
-            // }
             
-            //m_Rigidbody2D.AddForce(thrust * 10);
-            //m_Rigidbody2D.AddForce(new Vector2(m_JumpForce,0f));
-            
-            //m_Rigidbody2D.AddForce(Vector3.right * 7000);
-            //m_Rigidbody2D.velocity = new Vector2(move*100, m_Rigidbody2D.velocity.y);
-            
-            //m_Rigidbody2D.velocity = new Vector2(10*m_MaxSpeed, m_Rigidbody2D.velocity.y);
-            //m_Anim.SetFloat("Speed", Mathf.Abs(move));
-
-            // Move the character
-            //m_Rigidbody2D.velocity = new Vector2(10*m_MaxSpeed, m_Rigidbody2D.velocity.y);
             
         }
 

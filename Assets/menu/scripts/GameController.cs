@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour {
 	public int currentScene=0;
 	public string[] scenes;
 	Platformer2DUserControl plataformController ;
-
+	bool busy = false;
 	
 	
 	void Start () {
@@ -30,14 +30,16 @@ public class GameController : MonoBehaviour {
 	}
 	
 	public void startContinue(){
-		
+		if(busy) return ;
+		busy= true;
 		StartCoroutine(LoadGameScene(currentScene));
 		
 
 	}
 	public void startNewGame(){
 		
-
+		if(busy) return ;
+		busy= true;
 		StartCoroutine(LoadGameScene(0));
 		
 
@@ -60,6 +62,8 @@ public class GameController : MonoBehaviour {
 		 introCamera.SetActive(false) ;
 		 SceneManager.SetActiveScene (SceneManager.GetSceneByName (scenes[SceneNumber]));		 
 		 currentScene= SceneNumber;
+		 Time.timeScale=1;
+		 busy=false;
 	}
 
 	public void gotDead()
@@ -87,9 +91,11 @@ public class GameController : MonoBehaviour {
 	}
 	private void restartLevel (){
 		Debug.Log("rstart");
+		busy=true;
 		plataformController.setControl(true);
 		SceneManager.UnloadScene(scenes[currentScene]);
 		StartCoroutine(LoadGameScene(currentScene));
+		
 	}
 	
     IEnumerator  letEmDie(float animTime)
@@ -109,9 +115,10 @@ public class GameController : MonoBehaviour {
     }
     public void goal(){
     	if(currentScene<scenes.Length-1){
-    		SceneManager.UnloadScene(scenes[currentScene]);
+    		Time.timeScale=0;
+    		SceneManager.UnloadSceneAsync(scenes[currentScene]);
     		currentScene++;
-    		LoadGameScene(currentScene);
+    		StartCoroutine(LoadGameScene(currentScene));
     	}
     	
     }
