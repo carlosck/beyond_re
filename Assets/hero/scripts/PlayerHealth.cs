@@ -54,12 +54,12 @@ public class PlayerHealth : MonoBehaviour
 			currentHealth -= total_damage;
 		}
 				
-		//ShowDamage(total_damage);	
+		
 		
 		if(currentHealth>0)
 		{
 			
-			
+			ShowDamage(total_damage);
 			// updateHealthBar();
 			// StartCoroutine(showRed());
 		}
@@ -86,6 +86,8 @@ public class PlayerHealth : MonoBehaviour
 	
 	void ShowDamage(int amount)
 	{
+		
+		gc.showDamage();
 		//var pos= (Vector3) player.GetComponent<Transform>().position;
 		
 		

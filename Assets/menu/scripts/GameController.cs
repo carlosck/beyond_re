@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization	
 	public GameObject ui_start;
 	public GameObject ui_death;
+	public GameObject ui_hurt;
 
 	public GameObject introCamera;
 	public GameObject currentCamera;
@@ -23,6 +24,7 @@ public class GameController : MonoBehaviour {
 				
 		ui_start.SetActive(true);
 		ui_death.SetActive(false);
+		ui_hurt.SetActive(false);
 		//Todo load from disk
 		currentScene=0;
 		
@@ -113,6 +115,19 @@ public class GameController : MonoBehaviour {
     	Debug.Log(" --------- initScene ---------- ");
     	Time.timeScale=1;
     }
+    public void showDamage()
+    {
+    	ui_hurt.SetActive(true);
+    	StartCoroutine(hideDamage(2.0f));
+    }
+    
+    IEnumerator  hideDamage(float animTime)
+	{		
+		yield return new WaitForSeconds(animTime);
+		ui_hurt.SetActive(false);
+    }
+    
+
     public void goal(){
     	if(currentScene<scenes.Length-1){
     		Time.timeScale=0;
