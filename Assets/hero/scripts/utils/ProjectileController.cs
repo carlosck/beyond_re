@@ -17,16 +17,20 @@ public class ProjectileController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D coll){
-		Debug.Log(coll.gameObject.tag);
+		// Debug.Log(coll.gameObject.tag);
 		if (coll.gameObject.tag == "wall")
 		{
-            Destroy(gameObject);           
+            if(gameObject !=null){
+            	Destroy(gameObject);           
+            }
 		}
 		else
 		{
 			if (coll.gameObject.tag == "Enemy")
 			{
-	            Destroy(gameObject);
+	            if(gameObject !=null){
+                	Destroy(gameObject);           
+                }
 	            coll.gameObject.SendMessage("TakeDamage", 10);
 			}
 		}

@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
 	public int startingHealth = 100;
 	public int currentHealth;
+
 	//public Slider healthSlider;
 	//public Text HealthTextPercent;
 	public int defense = 0;
@@ -33,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
 		{
 			gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();	
 		}
-		
+		Debug.Log((double)(500/400));
 		
 		//characterMotor = player.GetComponent<CharacterMotor>();
 		//renderer = transform.Find("animations").GetComponent <SpriteRenderer>();
@@ -44,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
 	public void TakeDamage(int amount)
 	{
 		if(isDead) {return ;}
-		
+		var prev_health = currentHealth;
 		int total_damage = amount-defense;
 		if(total_damage<=0)
 			total_damage = 0;
@@ -55,11 +56,12 @@ public class PlayerHealth : MonoBehaviour
 		}
 				
 		
-		
+		ShowDamage(prev_health/(float)startingHealth,currentHealth/(float)startingHealth,total_damage);
 		if(currentHealth>0)
 		{
 			
-			ShowDamage(total_damage);
+			
+			
 			// updateHealthBar();
 			// StartCoroutine(showRed());
 		}
@@ -84,10 +86,10 @@ public class PlayerHealth : MonoBehaviour
 
 	}
 	
-	void ShowDamage(int amount)
+	void ShowDamage(float current_health,float new_health,int amount)
 	{
 		
-		gc.showDamage();
+		gc.showDamage( current_health, new_health, amount);
 		//var pos= (Vector3) player.GetComponent<Transform>().position;
 		
 		

@@ -51,6 +51,7 @@ namespace UnityStandardAssets._2D
             if(canControl){
                 bool crouch = Input.GetKey(KeyCode.DownArrow);
                 float h = CrossPlatformInputManager.GetAxis("Horizontal");
+                int shoot_lvl =0;
                 // Pass all parameters to the character control script.
                 
                 if (CrossPlatformInputManager.GetButton("Fire1"))
@@ -80,6 +81,18 @@ namespace UnityStandardAssets._2D
                             m_Shoot = true;                        
                         }
                         holdingPower= false;
+                        shoot_lvl =1;
+                        Debug.Log("FirePower");
+                        Debug.Log(FirePower);
+                        if(FirePower>33 && FirePower < 66){
+                           shoot_lvl =2;
+                        }
+                        else{
+                            if(FirePower>=66 )
+                            {
+                                shoot_lvl =3;
+                            }
+                        }
                         FirePower=0;
                     }
 
@@ -102,10 +115,12 @@ namespace UnityStandardAssets._2D
                         m_PointingUp= true;    
                     }
                     
-                }
-                m_Character.Move(h, crouch, m_Jump,m_Shoot,FirePower,m_Dash,m_PointingUp);
+                }               
+                
+                m_Character.Move(h, crouch, m_Jump,m_Shoot,shoot_lvl,FirePower,m_Dash,m_PointingUp);
                 m_Jump = false;
                 m_Shoot = false; 
+
                 m_Dash = false;
                 m_PointingUp = false;
             }

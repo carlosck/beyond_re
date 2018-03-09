@@ -22,7 +22,9 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
-        public GameObject bulletPrefab;
+        public GameObject bulletPrefab_1;
+        public GameObject bulletPrefab_2;
+        public GameObject bulletPrefab_3;
         public Transform shootOrigin;
         public float rocketSpeed;
         public float dashSpeed;
@@ -71,7 +73,7 @@ namespace UnityStandardAssets._2D
         }
 
 
-        public void Move(float move, bool crouch, bool jump,bool shoot,float firePower,bool dash,bool pointingUp)
+        public void Move(float move, bool crouch, bool jump,bool shoot,int shoot_lvl,float firePower,bool dash,bool pointingUp)
         {
             
             // If crouching, check to see if the character can stand up
@@ -148,18 +150,20 @@ namespace UnityStandardAssets._2D
             
             firePower_Anim.SetFloat("firePower", firePower);
             
+
             
 
-            if(shoot)
+            if(shoot && shoot_lvl>0)
             {
-                Debug.Log(pointingUp);
+                Debug.Log("shoot");
+                Debug.Log(shoot_lvl);
                 if(pointingUp)
                 {
-                    ShootBulletUp();    
+                    ShootBulletUp(shoot_lvl);    
                 }
                 else
                 {
-                    ShootBullet();
+                    ShootBullet(shoot_lvl);
                 }
                 
             }
@@ -190,21 +194,41 @@ namespace UnityStandardAssets._2D
             transform.localScale = theScale;
         }
 
-        public void ShootBullet()
+        public void ShootBullet(int shoot_lvl)
         {
-            GameObject Clone;
+            GameObject Clone=null;
             //Clone = (Instantiate(bulletPrefab, transform.position,transform.rotation)) as GameObject;
             m_Anim.SetBool("Shoot",true);
             StartCoroutine(stopShoot());
-            Clone = (Instantiate(bulletPrefab, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,0))));
             Vector2 thrust;
+            float local_rocketSpeed=rocketSpeed;
+            Debug.Log(shoot_lvl);
+            if(shoot_lvl==1){
+                Clone = (Instantiate(bulletPrefab_1, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,0))));
+                local_rocketSpeed = rocketSpeed;
+            }
+            else {
+                if(shoot_lvl ==2){
+                    Clone = (Instantiate(bulletPrefab_2, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,0))));
+                    local_rocketSpeed = (float)(rocketSpeed*0.75);
+                }
+                else{
+                        if(shoot_lvl ==3){
+                            Clone = (Instantiate(bulletPrefab_3, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,0))));
+                            local_rocketSpeed = (float)(rocketSpeed*0.5);    
+                        }
+                        
+                }
+            }
+            // Clone = (Instantiate(bulletPrefab_1, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,0))));
+            
             if(m_FacingRight)
             {
-                thrust = new Vector2(rocketSpeed, 0);
+                thrust = new Vector2(local_rocketSpeed, 0);
             }
             else
             {                
-                thrust = new Vector2(-rocketSpeed, 0);
+                thrust = new Vector2(-local_rocketSpeed, 0);
                 Vector3 theScale = Clone.transform.localScale;
                 theScale.x *= -1;
                 Clone.transform.localScale = theScale;                
@@ -213,14 +237,15 @@ namespace UnityStandardAssets._2D
             Clone.GetComponent<Rigidbody2D>().AddForce(thrust * 10);
             
             
+            
         }
-        public void ShootBulletUp()
+        public void ShootBulletUp(float firePower)
         {
             GameObject Clone;
             //Clone = (Instantiate(bulletPrefab, transform.position,transform.rotation)) as GameObject;
             m_Anim.SetBool("ShootUp",true);
             StartCoroutine(stopShoot());
-            Clone = (Instantiate(bulletPrefab, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,90))));
+            Clone = (Instantiate(bulletPrefab_1, shootOrigin.position,Quaternion.Euler(new Vector3(0,0,90))));
             Vector2 thrust;
                           
             thrust = new Vector2(0, rocketSpeed);
@@ -235,7 +260,7 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("pushing", _pushing);
         }
         IEnumerator stopShoot(){
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.3f);
             m_Anim.SetBool("Shoot",false);
             m_Anim.SetBool("ShootUp",false);
         }

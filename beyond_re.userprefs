@@ -1,7 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/hero/scripts/utils/EsceneController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/menu/scripts/healtBarController.cs">
     <Files>
+      <File FileName="Assets/menu/scripts/healtBarController.cs" Line="1" Column="1" />
+      <File FileName="Assets/hero/scripts/PlayerHealth.cs" Line="1" Column="1" />
       <File FileName="Assets/hero/scripts/utils/EsceneController.cs" Line="11" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

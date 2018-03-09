@@ -65,6 +65,7 @@
      <Compile Include="Assets\hero\scripts\utils\killZone.cs" />
      <Compile Include="Assets\hero\scripts\utils\pushDetector.cs" />
      <Compile Include="Assets\menu\scripts\GameController.cs" />
+     <Compile Include="Assets\menu\scripts\HealthBarController.cs" />
      <Compile Include="Assets\menu\scripts\InitScreen.cs" />
      <Compile Include="Assets\menu\scripts\deathScreen.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />

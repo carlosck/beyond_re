@@ -10,7 +10,8 @@ public class GameController : MonoBehaviour {
 	public GameObject ui_start;
 	public GameObject ui_death;
 	public GameObject ui_hurt;
-
+	public GameObject health_line;
+	private HealthBarController healthBarController;
 	public GameObject introCamera;
 	public GameObject currentCamera;
 	public GameObject player;
@@ -27,6 +28,9 @@ public class GameController : MonoBehaviour {
 		ui_hurt.SetActive(false);
 		//Todo load from disk
 		currentScene=0;
+		
+		healthBarController = health_line.GetComponent<HealthBarController>();	
+		
 		
 		
 	}
@@ -49,16 +53,16 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator LoadGameScene(int SceneNumber)
 	 {
-		 Debug.Log ( "START Load Async" );
+		 // Debug.Log ( "START Load Async" );
 		 var result = SceneManager.LoadSceneAsync ( scenes[SceneNumber], LoadSceneMode.Additive );
 		 result.allowSceneActivation = true;
 
 		 while (!result.isDone) 
 		 {
-			 Debug.Log ( "progress: " + result.progress );
+			 // Debug.Log ( "progress: " + result.progress );
 			 yield return new WaitForEndOfFrame ();
 		 }
-		 Debug.Log ( "YEAH Loaded Async" );
+		 // Debug.Log ( "YEAH Loaded Async" );
 		 // still scene one should be active, tryed it as workaround, did not help
 		 ui_start.SetActive(false);
 		 introCamera.SetActive(false) ;
@@ -112,13 +116,15 @@ public class GameController : MonoBehaviour {
     	player= _player;
     	plataformController= player.GetComponent<Platformer2DUserControl>();
     	currentCamera= _camera;
-    	Debug.Log(" --------- initScene ---------- ");
+    	// Debug.Log(" --------- initScene ---------- ");
     	Time.timeScale=1;
     }
-    public void showDamage()
+    
+    public void showDamage(float current_health,float new_health,int total_damage)
     {
     	ui_hurt.SetActive(true);
-    	StartCoroutine(hideDamage(2.0f));
+    	StartCoroutine(hideDamage(0.2f));
+    	healthBarController.updateHealthBar(current_health,new_health);
     }
     
     IEnumerator  hideDamage(float animTime)
