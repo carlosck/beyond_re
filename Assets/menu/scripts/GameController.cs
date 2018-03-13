@@ -11,12 +11,12 @@ public class GameController : MonoBehaviour {
 	public GameObject ui_death;
 	public GameObject ui_hurt;
 	public GameObject ui_health_line;
+	public GameObject ui_charge;
 	
-	public GameObject ui_charge_1;
-	public GameObject ui_charge_2;
-	public GameObject ui_charge_3;
+	
 
 	private HealthBarController healthBarController;
+	private ChargeBarController chargeBarController;
 	public GameObject introCamera;
 	public GameObject currentCamera;
 	public GameObject player;
@@ -32,13 +32,12 @@ public class GameController : MonoBehaviour {
 		ui_death.SetActive(false);
 		ui_hurt.SetActive(false);
 		
-		ui_charge_1.SetActive(false);
-		ui_charge_2.SetActive(false);
-		ui_charge_3.SetActive(false);
-		//Todo load from disk
-		currentScene=0;
 		
 		healthBarController = ui_health_line.GetComponent<HealthBarController>();	
+		chargeBarController = ui_charge.GetComponent<ChargeBarController>();	
+		
+		//Todo load from disk
+		currentScene=0;
 		
 		
 		
@@ -108,6 +107,7 @@ public class GameController : MonoBehaviour {
 		Debug.Log("rstart");
 		busy=true;
 		plataformController.setControl(true);
+		restart_UI();
 		SceneManager.UnloadScene(scenes[currentScene]);
 		StartCoroutine(LoadGameScene(currentScene));
 		
@@ -153,29 +153,12 @@ public class GameController : MonoBehaviour {
     	
     }
     public void updateChargeLvl(int charge_level){
-    	switch(charge_level){
-    		case 0: 
-    		ui_charge_1.SetActive(false);
-			ui_charge_2.SetActive(false);
-			ui_charge_3.SetActive(false);
-			break;
-    		case 1: 
-    		ui_charge_1.SetActive(true);
-			ui_charge_2.SetActive(false);
-			ui_charge_3.SetActive(false);
-			break;
-			case 2: 
-    		ui_charge_1.SetActive(true);
-			ui_charge_2.SetActive(true);
-			ui_charge_3.SetActive(false);
-			break;
-			case 3: 
-    		ui_charge_1.SetActive(true);
-			ui_charge_2.SetActive(true);
-			ui_charge_3.SetActive(true);
-			break;
-    	}
+    	chargeBarController.updateChargeLvl(charge_level);
     }
 	
-	
+	public void restart_UI(){
+		ui_death.SetActive(false);
+		healthBarController.restart();
+		chargeBarController.restart();
+	}
 }

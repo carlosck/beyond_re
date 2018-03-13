@@ -36,5 +36,9 @@ public class HealthBarController : MonoBehaviour {
 		transform.localScale = scale_end;
 
 	 }
+
+	 public void restart(){
+	 	transform.localScale = new Vector3(1f, 1f, 1f);
+	 }
 	 
 }

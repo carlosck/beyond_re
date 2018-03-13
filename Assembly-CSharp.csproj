@@ -65,6 +65,7 @@
      <Compile Include="Assets\hero\scripts\utils\pushDetector.cs" />
      <Compile Include="Assets\menu\scripts\Camera2DFollow.cs" />
      <Compile Include="Assets\menu\scripts\CameraFollow.cs" />
+     <Compile Include="Assets\menu\scripts\ChargeBarController.cs" />
      <Compile Include="Assets\menu\scripts\EsceneController.cs" />
      <Compile Include="Assets\menu\scripts\GameController.cs" />
      <Compile Include="Assets\menu\scripts\HealthBarController.cs" />
